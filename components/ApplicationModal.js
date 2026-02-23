@@ -44,7 +44,7 @@ export default function ApplicationModal({ isOpen, onClose, initialPlan = 'stand
                 `Message:\n${formData.message}`
             );
 
-            const mailtoUrl = `mailto:info@learnfinity.com?subject=${subject}&body=${body}`;
+            const mailtoUrl = `mailto:info@learnfinityacademy.com?subject=${subject}&body=${body}`;
 
             // We use window.location.href to trigger the mail client
             window.location.href = mailtoUrl;
