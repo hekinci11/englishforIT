@@ -12,15 +12,20 @@ export default function ApplicationModal({ isOpen, onClose, initialPlan = 'stand
     const [status, setStatus] = useState('idle'); // idle, submitting, success, error
 
     useEffect(() => {
-        if (isOpen) {
-            setFormData(prev => ({ ...prev, plan: initialPlan }));
-            setStatus('idle');
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
+        // Run only on client to avoid hydration mismatch
+        if (typeof window !== 'undefined') {
+            if (isOpen) {
+                setFormData(prev => ({ ...prev, plan: initialPlan }));
+                setStatus('idle');
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'unset';
+            }
         }
         return () => {
-            document.body.style.overflow = 'unset';
+            if (typeof window !== 'undefined') {
+                document.body.style.overflow = 'unset';
+            }
         };
     }, [isOpen, initialPlan]);
 

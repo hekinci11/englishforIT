@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import ApplicationModal from './ApplicationModal';
+import { useModal } from '../lib/ModalContext';
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { openModal } = useModal();
 
     return (
         <nav style={{
@@ -68,7 +68,7 @@ export default function Navbar() {
                     }}>
                         AI Practice
                     </Link>
-                    <button className="btn btn-primary btn-sm" onClick={() => setIsModalOpen(true)}>
+                    <button className="btn btn-primary btn-sm" onClick={() => openModal('standard')}>
                         Get Started
                     </button>
                 </div>
@@ -103,7 +103,7 @@ export default function Navbar() {
                     <Link href="/dashboard">Dashboard</Link>
                     <Link href="/modules/vocabulary">Modules</Link>
                     <Link href="/ai-practice">AI Practice</Link>
-                    <button className="btn btn-primary btn-sm" onClick={() => setIsModalOpen(true)}>Get Started</button>
+                    <button className="btn btn-primary btn-sm" onClick={() => openModal('standard')}>Get Started</button>
                 </div>
             )}
 
@@ -120,11 +120,6 @@ export default function Navbar() {
           }
         }
       `}</style>
-            <ApplicationModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                initialPlan="standard"
-            />
         </nav>
     );
 }

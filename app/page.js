@@ -3,12 +3,11 @@
 import Navbar from '../components/Navbar';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import ApplicationModal from '../components/ApplicationModal';
+import { useModal } from '../lib/ModalContext';
 
 export default function Home() {
   const [notification, setNotification] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState('standard');
+  const { openModal } = useModal();
 
   useEffect(() => {
     if (notification) {
@@ -19,8 +18,7 @@ export default function Home() {
 
   const handleEnroll = (e, plan = 'standard') => {
     e.preventDefault();
-    setSelectedPlan(plan);
-    setIsModalOpen(true);
+    openModal(plan);
   };
   return (
     <>
@@ -617,11 +615,6 @@ export default function Home() {
         </div>
       )}
 
-      <ApplicationModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        initialPlan={selectedPlan}
-      />
     </>
   );
 }
