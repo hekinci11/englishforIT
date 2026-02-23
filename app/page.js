@@ -4,10 +4,14 @@ import Navbar from '../components/Navbar';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useModal } from '../lib/ModalContext';
+import { useLanguage } from '../lib/LanguageContext';
+import { translations } from '../lib/translations';
 
 export default function Home() {
   const [notification, setNotification] = useState(null);
   const { openModal } = useModal();
+  const { language } = useLanguage();
+  const t = translations[language].hero;
 
   useEffect(() => {
     if (notification) {
@@ -88,7 +92,7 @@ export default function Home() {
                 backdropFilter: 'blur(10px)',
                 WebkitBackdropFilter: 'blur(10px)',
               }}>
-                ✨ AI-Powered Learning with Native Teachers
+                {t.badge}
               </span>
 
               <h1 style={{
@@ -98,32 +102,34 @@ export default function Home() {
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
+                lineHeight: 1.1,
                 fontWeight: '800',
-                lineHeight: '1.1',
+                letterSpacing: '-0.02em',
               }}>
-                English for IT Professionals
+                {t.title}
               </h1>
 
               <p style={{
                 fontSize: 'var(--font-size-xl)',
-                color: 'var(--color-text-secondary)',
+                color: 'var(--color-text-primary)',
                 marginBottom: 'var(--spacing-lg)',
-                lineHeight: 1.8,
                 maxWidth: '800px',
                 margin: '0 auto var(--spacing-lg)',
+                fontWeight: '500',
+                lineHeight: 1.5,
               }}>
-                Master technical English with live interactive classes, AI-powered practice tools,
-                and expert American instructors
+                {t.subtitle}
               </p>
 
               <p style={{
-                fontSize: 'var(--font-size-base)',
-                color: 'var(--color-text-tertiary)',
-                marginBottom: 'var(--spacing-3xl)',
+                fontSize: 'var(--font-size-lg)',
+                color: 'var(--color-text-muted)',
+                marginBottom: 'var(--spacing-2xl)',
+                maxWidth: '700px',
+                margin: '0 auto var(--spacing-2xl)',
                 lineHeight: 1.6,
               }}>
-                Perfect for IT professionals who want to excel in international projects,
-                technical interviews, and global collaboration
+                {t.description}
               </p>
 
               <div style={{
@@ -131,13 +137,20 @@ export default function Home() {
                 gap: 'var(--spacing-lg)',
                 justifyContent: 'center',
                 flexWrap: 'wrap',
-                marginBottom: 'var(--spacing-3xl)',
               }}>
-                <button onClick={(e) => handleEnroll(e, 'standard')} className="btn btn-primary btn-lg">
-                  Get Started →
+                <button
+                  onClick={handleEnroll}
+                  className="btn btn-primary btn-lg"
+                  style={{ minWidth: '200px' }}
+                >
+                  {t.ctaStarted}
                 </button>
-                <Link href="/dashboard" className="btn btn-secondary btn-lg">
-                  Try Free Modules
+                <Link
+                  href="/modules/free"
+                  className="btn btn-secondary btn-lg"
+                  style={{ minWidth: '200px' }}
+                >
+                  {t.ctaFree}
                 </Link>
               </div>
 

@@ -1,12 +1,14 @@
-'use client';
-
 import Link from 'next/link';
 import { useState } from 'react';
 import { useModal } from '../lib/ModalContext';
+import { useLanguage } from '../lib/LanguageContext';
+import { translations } from '../lib/translations';
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { openModal } = useModal();
+    const { language, toggleLanguage } = useLanguage();
+    const t = translations[language].nav;
 
     return (
         <nav style={{
@@ -52,24 +54,46 @@ export default function Navbar() {
                         fontWeight: '500',
                         transition: 'color var(--transition-fast)',
                     }}>
-                        Dashboard
+                        {t.dashboard}
                     </Link>
                     <Link href="/modules/vocabulary" style={{
                         color: 'var(--color-text-secondary)',
                         fontWeight: '500',
                         transition: 'color var(--transition-fast)',
                     }}>
-                        Modules
+                        {t.modules}
                     </Link>
                     <Link href="/ai-practice" style={{
                         color: 'var(--color-text-secondary)',
                         fontWeight: '500',
                         transition: 'color var(--transition-fast)',
                     }}>
-                        AI Practice
+                        {t.aiPractice}
                     </Link>
+
+                    {/* Language Switcher */}
+                    <div style={{ display: 'flex', gap: 'var(--spacing-sm)', fontSize: '0.875rem' }}>
+                        <button
+                            onClick={() => toggleLanguage('en')}
+                            style={{
+                                background: 'none', border: 'none', cursor: 'pointer',
+                                color: language === 'en' ? 'var(--color-primary)' : 'var(--color-text-muted)',
+                                fontWeight: language === 'en' ? '700' : '400'
+                            }}
+                        >EN</button>
+                        <span style={{ color: 'var(--color-border)' }}>|</span>
+                        <button
+                            onClick={() => toggleLanguage('tr')}
+                            style={{
+                                background: 'none', border: 'none', cursor: 'pointer',
+                                color: language === 'tr' ? 'var(--color-primary)' : 'var(--color-text-muted)',
+                                fontWeight: language === 'tr' ? '700' : '400'
+                            }}
+                        >TR</button>
+                    </div>
+
                     <button className="btn btn-primary btn-sm" onClick={() => openModal('standard')}>
-                        Get Started
+                        {t.getStarted}
                     </button>
                 </div>
 
@@ -100,10 +124,14 @@ export default function Navbar() {
                     background: 'var(--color-bg-secondary)',
                     borderTop: '1px solid var(--color-border)',
                 }}>
-                    <Link href="/dashboard">Dashboard</Link>
-                    <Link href="/modules/vocabulary">Modules</Link>
-                    <Link href="/ai-practice">AI Practice</Link>
-                    <button className="btn btn-primary btn-sm" onClick={() => openModal('standard')}>Get Started</button>
+                    <Link href="/dashboard">{t.dashboard}</Link>
+                    <Link href="/modules/vocabulary">{t.modules}</Link>
+                    <Link href="/ai-practice">{t.aiPractice}</Link>
+                    <div style={{ display: 'flex', gap: 'var(--spacing-md)', margin: 'var(--spacing-sm) 0' }}>
+                        <button onClick={() => toggleLanguage('en')} style={{ background: 'none', border: 'none', color: language === 'en' ? 'var(--color-primary)' : 'var(--color-text-primary)' }}>EN</button>
+                        <button onClick={() => toggleLanguage('tr')} style={{ background: 'none', border: 'none', color: language === 'tr' ? 'var(--color-primary)' : 'var(--color-text-primary)' }}>TR</button>
+                    </div>
+                    <button className="btn btn-primary btn-sm" onClick={() => openModal('standard')}>{t.getStarted}</button>
                 </div>
             )}
 
