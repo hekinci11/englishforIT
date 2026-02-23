@@ -171,7 +171,7 @@ export default function Home() {
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}>🎥</span>
-                  Live Classes
+                  {t.features.live}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
                   <span style={{
@@ -180,7 +180,7 @@ export default function Home() {
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}>🤖</span>
-                  AI Practice
+                  {t.features.ai}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
                   <span style={{
@@ -189,7 +189,7 @@ export default function Home() {
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}>👨‍🏫</span>
-                  Native Teachers
+                  {t.features.teachers}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
                   <span style={{
@@ -198,7 +198,7 @@ export default function Home() {
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                   }}>🏆</span>
-                  Certificate
+                  {t.features.certificate}
                 </div>
               </div>
             </div>
@@ -210,7 +210,7 @@ export default function Home() {
       <section className="section" style={{ background: 'var(--color-bg-secondary)' }}>
         <div className="container">
           <h2 className="text-center" style={{ marginBottom: 'var(--spacing-xl)' }}>
-            About the Course
+            {translations[language].about.title}
           </h2>
           <p className="text-center" style={{
             fontSize: 'var(--font-size-lg)',
@@ -219,39 +219,33 @@ export default function Home() {
             maxWidth: '800px',
             margin: '0 auto var(--spacing-3xl)',
           }}>
-            Our comprehensive English for IT Professionals course is designed to help IT workers
-            improve their technical English skills and communicate confidently in global work environments.
+            {translations[language].about.description}
           </p>
 
           <div className="grid grid-cols-2" style={{ marginBottom: 'var(--spacing-3xl)' }}>
             <div className="card">
-              <h3 style={{ marginBottom: 'var(--spacing-md)' }}>🎯 Course Objectives</h3>
+              <h3 style={{ marginBottom: 'var(--spacing-md)' }}>{translations[language].about.objectives.title}</h3>
               <ul style={{
                 paddingLeft: 'var(--spacing-xl)',
                 color: 'var(--color-text-secondary)',
                 lineHeight: 2,
               }}>
-                <li>Master IT-specific vocabulary and technical terminology</li>
-                <li>Communicate effectively in meetings and presentations</li>
-                <li>Write professional emails and technical documentation</li>
-                <li>Excel in English technical interviews</li>
-                <li>Participate confidently in international conferences</li>
-                <li>Collaborate seamlessly on global projects</li>
+                {translations[language].about.objectives.items.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
               </ul>
             </div>
 
             <div className="card">
-              <h3 style={{ marginBottom: 'var(--spacing-md)' }}>👥 Who Should Enroll?</h3>
+              <h3 style={{ marginBottom: 'var(--spacing-md)' }}>{translations[language].about.who.title}</h3>
               <ul style={{
                 paddingLeft: 'var(--spacing-xl)',
                 color: 'var(--color-text-secondary)',
                 lineHeight: 2,
               }}>
-                <li>Software developers and engineers</li>
-                <li>DevOps and system administrators</li>
-                <li>Project managers in IT</li>
-                <li>IT professionals seeking global opportunities</li>
-                <li>Anyone working or planning to work in tech</li>
+                {translations[language].about.who.items.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
               </ul>
               <div style={{
                 marginTop: 'var(--spacing-lg)',
@@ -260,9 +254,9 @@ export default function Home() {
                 borderRadius: 'var(--radius-md)',
                 borderLeft: '4px solid var(--color-accent)',
               }}>
-                <strong style={{ color: 'var(--color-accent)' }}>Required:</strong>
+                <strong style={{ color: 'var(--color-accent)' }}>{translations[language].about.who.required}</strong>
                 <span style={{ color: 'var(--color-text-secondary)', marginLeft: 'var(--spacing-sm)' }}>
-                  Minimum A2 level English proficiency
+                  {translations[language].about.who.proficiency}
                 </span>
               </div>
             </div>
@@ -274,57 +268,20 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <h2 className="text-center" style={{ marginBottom: 'var(--spacing-3xl)' }}>
-            What You'll Achieve
+            {translations[language].achievements.title}
           </h2>
 
           <div className="grid grid-cols-3">
-            <div className="card text-center">
-              <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-md)' }}>🗣️</div>
-              <h3>Confident Communication</h3>
-              <p>
-                Feel confident in daily interactions, meetings, and presentations with colleagues and clients.
-              </p>
-            </div>
-
-            <div className="card text-center">
-              <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-md)' }}>💼</div>
-              <h3>Interview Success</h3>
-              <p>
-                Excel in English technical interviews. Express your skills and experience clearly and professionally.
-              </p>
-            </div>
-
-            <div className="card text-center">
-              <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-md)' }}>📚</div>
-              <h3>Technical Vocabulary</h3>
-              <p>
-                Master IT-specific terms, acronyms, and expressions used in software development and DevOps.
-              </p>
-            </div>
-
-            <div className="card text-center">
-              <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-md)' }}>📝</div>
-              <h3>Professional Writing</h3>
-              <p>
-                Write clear documentation, emails, and code comments. Explain technical concepts effectively.
-              </p>
-            </div>
-
-            <div className="card text-center">
-              <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-md)' }}>🌍</div>
-              <h3>Global Opportunities</h3>
-              <p>
-                Participate confidently in international conferences and collaborate on global projects.
-              </p>
-            </div>
-
-            <div className="card text-center">
-              <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-md)' }}>🎯</div>
-              <h3>Problem-Solving Skills</h3>
-              <p>
-                Explain bugs, propose solutions, and conduct code reviews effectively in English.
-              </p>
-            </div>
+            {translations[language].achievements.items.map((item, index) => {
+              const icons = ['🗣️', '💼', '📚', '📝', '🌍', '🎯'];
+              return (
+                <div key={index} className="card text-center">
+                  <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-md)' }}>{icons[index]}</div>
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -333,75 +290,22 @@ export default function Home() {
       <section className="section" style={{ background: 'var(--color-bg-secondary)' }}>
         <div className="container">
           <h2 className="text-center" style={{ marginBottom: 'var(--spacing-3xl)' }}>
-            Course Features
+            {translations[language].features.title}
           </h2>
 
           <div className="grid grid-cols-2" style={{ gap: 'var(--spacing-2xl)' }}>
-            <div className="card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
-                <div style={{ fontSize: '2.5rem' }}>🎥</div>
-                <h3 style={{ margin: 0 }}>Live Interactive Classes</h3>
-              </div>
-              <p>
-                Join live online sessions with experienced American teachers.
-                Participate in real-time discussions, ask questions, and receive immediate feedback.
-              </p>
-            </div>
-
-            <div className="card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
-                <div style={{ fontSize: '2.5rem' }}>👨‍🏫</div>
-                <h3 style={{ margin: 0 }}>Native American Teachers</h3>
-              </div>
-              <p>
-                Learn from qualified native English speakers with experience in the IT industry.
-                Get authentic pronunciation and cultural insights.
-              </p>
-            </div>
-
-            <div className="card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
-                <div style={{ fontSize: '2.5rem' }}>🤖</div>
-                <h3 style={{ margin: 0 }}>AI-Powered Practice</h3>
-              </div>
-              <p>
-                Practice anytime with our AI conversation partner. Get instant feedback on grammar,
-                vocabulary, and pronunciation between live classes.
-              </p>
-            </div>
-
-            <div className="card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
-                <div style={{ fontSize: '2.5rem' }}>📖</div>
-                <h3 style={{ margin: 0 }}>Self-Paced Modules</h3>
-              </div>
-              <p>
-                Access vocabulary flashcards, reading exercises, and quizzes at your own pace.
-                Reinforce what you learn in live classes.
-              </p>
-            </div>
-
-            <div className="card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
-                <div style={{ fontSize: '2.5rem' }}>💻</div>
-                <h3 style={{ margin: 0 }}>Technical Requirements</h3>
-              </div>
-              <p>
-                Computer with camera and microphone required for live classes.
-                Internet connection for online learning platform access.
-              </p>
-            </div>
-
-            <div className="card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
-                <div style={{ fontSize: '2.5rem' }}>🏆</div>
-                <h3 style={{ margin: 0 }}>Certificate of Completion</h3>
-              </div>
-              <p>
-                Receive an official certificate upon successful completion of the course.
-                Boost your resume and LinkedIn profile.
-              </p>
-            </div>
+            {translations[language].features.items.map((item, index) => {
+              const icons = ['🎥', '👨‍🏫', '🤖', '📖', '💻', '🏆'];
+              return (
+                <div key={index} className="card">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
+                    <div style={{ fontSize: '2.5rem' }}>{icons[index]}</div>
+                    <h3 style={{ margin: 0 }}>{item.title}</h3>
+                  </div>
+                  <p>{item.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -410,30 +314,30 @@ export default function Home() {
       <section id="pricing" className="section">
         <div className="container">
           <h2 className="text-center" style={{ marginBottom: 'var(--spacing-xl)' }}>
-            Choose Your Plan
+            {translations[language].pricing.title}
           </h2>
           <p className="text-center" style={{
             fontSize: 'var(--font-size-lg)',
             color: 'var(--color-text-tertiary)',
             marginBottom: 'var(--spacing-3xl)',
           }}>
-            Select the plan that best fits your learning goals
+            {translations[language].pricing.subtitle}
           </p>
 
           <div className="grid grid-cols-3">
             {/* Free Plan */}
             <div className="card">
               <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-lg)' }}>
-                <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>Free Access</h3>
+                <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>{translations[language].pricing.plans.free.title}</h3>
                 <div style={{
                   fontSize: 'var(--font-size-4xl)',
                   fontWeight: '700',
                   marginBottom: 'var(--spacing-sm)',
                 }}>
-                  $0
+                  {translations[language].pricing.plans.free.price}
                 </div>
                 <p style={{ color: 'var(--color-text-tertiary)', margin: 0 }}>
-                  Try the platform
+                  {translations[language].pricing.plans.free.desc}
                 </p>
               </div>
 
@@ -443,16 +347,16 @@ export default function Home() {
                 marginBottom: 'var(--spacing-xl)',
                 color: 'var(--color-text-secondary)',
               }}>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ Self-paced learning modules</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ AI conversation practice</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ Vocabulary flashcards</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ Basic quizzes</li>
-                <li style={{ marginBottom: 'var(--spacing-md)', opacity: 0.5 }}>✗ No live classes</li>
-                <li style={{ marginBottom: 'var(--spacing-md)', opacity: 0.5 }}>✗ No certificate</li>
+                {translations[language].pricing.plans.free.features.map((f, i) => (
+                  <li key={i} style={{ marginBottom: 'var(--spacing-md)' }}>✓ {f}</li>
+                ))}
+                {translations[language].pricing.plans.free.notIncluded.map((f, i) => (
+                  <li key={i} style={{ marginBottom: 'var(--spacing-md)', opacity: 0.5 }}>✗ {f}</li>
+                ))}
               </ul>
 
               <button className="btn btn-secondary" style={{ width: '100%' }} onClick={(e) => handleEnroll(e, 'free')}>
-                Start Free
+                {translations[language].pricing.plans.free.cta}
               </button>
             </div>
 
@@ -475,20 +379,20 @@ export default function Home() {
                   color: 'white',
                   padding: 'var(--spacing-sm) var(--spacing-lg)',
                   fontWeight: '600',
-                }}>Most Popular</span>
+                }}>{translations[language].pricing.plans.standard.badge}</span>
               </div>
 
               <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-lg)' }}>
-                <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>Standard Course</h3>
+                <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>{translations[language].pricing.plans.standard.title}</h3>
                 <div style={{
                   fontSize: 'var(--font-size-4xl)',
                   fontWeight: '700',
                   marginBottom: 'var(--spacing-sm)',
                 }}>
-                  $299
+                  {translations[language].pricing.plans.standard.price}
                 </div>
                 <p style={{ color: 'var(--color-text-tertiary)', margin: 0 }}>
-                  8-week program
+                  {translations[language].pricing.plans.standard.desc}
                 </p>
               </div>
 
@@ -498,32 +402,29 @@ export default function Home() {
                 marginBottom: 'var(--spacing-xl)',
                 color: 'var(--color-text-secondary)',
               }}>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ All free features</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ 16 live classes (2/week)</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ American native teachers</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ Small group sessions (max 10)</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ Certificate of completion</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ Lifetime module access</li>
+                {translations[language].pricing.plans.standard.features.map((f, i) => (
+                  <li key={i} style={{ marginBottom: 'var(--spacing-md)' }}>✓ {f}</li>
+                ))}
               </ul>
 
               <button className="btn btn-primary" style={{ width: '100%', cursor: 'pointer' }} onClick={(e) => handleEnroll(e, 'standard')}>
-                Enroll Now
+                {translations[language].pricing.plans.standard.cta}
               </button>
             </div>
 
             {/* Premium Plan */}
             <div className="card">
               <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-lg)' }}>
-                <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>Premium Course</h3>
+                <h3 style={{ marginBottom: 'var(--spacing-sm)' }}>{translations[language].pricing.plans.premium.title}</h3>
                 <div style={{
                   fontSize: 'var(--font-size-4xl)',
                   fontWeight: '700',
                   marginBottom: 'var(--spacing-sm)',
                 }}>
-                  $499
+                  {translations[language].pricing.plans.premium.price}
                 </div>
                 <p style={{ color: 'var(--color-text-tertiary)', margin: 0 }}>
-                  12-week intensive
+                  {translations[language].pricing.plans.premium.desc}
                 </p>
               </div>
 
@@ -533,16 +434,13 @@ export default function Home() {
                 marginBottom: 'var(--spacing-xl)',
                 color: 'var(--color-text-secondary)',
               }}>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ All standard features</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ 24 live classes (2/week)</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ 4 one-on-one sessions</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ Interview preparation module</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ Resume review in English</li>
-                <li style={{ marginBottom: 'var(--spacing-md)' }}>✓ Priority support</li>
+                {translations[language].pricing.plans.premium.features.map((f, i) => (
+                  <li key={i} style={{ marginBottom: 'var(--spacing-md)' }}>✓ {f}</li>
+                ))}
               </ul>
 
               <button className="btn btn-primary" style={{ width: '100%', cursor: 'pointer' }} onClick={(e) => handleEnroll(e, 'premium')}>
-                Enroll Now
+                {translations[language].pricing.plans.premium.cta}
               </button>
             </div>
           </div>
@@ -556,7 +454,7 @@ export default function Home() {
       }}>
         <div className="container">
           <h2 style={{ marginBottom: 'var(--spacing-lg)' }}>
-            Ready to Transform Your Technical English?
+            {translations[language].cta.title}
           </h2>
           <p style={{
             fontSize: 'var(--font-size-xl)',
@@ -565,15 +463,14 @@ export default function Home() {
             maxWidth: '700px',
             margin: '0 auto var(--spacing-2xl)',
           }}>
-            Join IT professionals from around the world who are advancing their careers
-            with better English communication skills
+            {translations[language].cta.subtitle}
           </p>
           <div style={{ display: 'flex', gap: 'var(--spacing-md)', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button onClick={(e) => handleEnroll(e, 'standard')} className="btn btn-primary btn-lg">
-              Get Started
+              {translations[language].cta.ctaStarted}
             </button>
-            <Link href="/dashboard" className="btn btn-secondary btn-lg">
-              Try Free Modules
+            <Link href="/modules/free" className="btn btn-secondary btn-lg">
+              {translations[language].cta.ctaFree}
             </Link>
           </div>
         </div>
@@ -588,7 +485,7 @@ export default function Home() {
       }}>
         <div className="container">
           <p style={{ margin: 0 }}>
-            © 2026 English for IT Professionals. Empowering IT workers to communicate globally.
+            {translations[language].footer.copyright}
           </p>
         </div>
       </footer>

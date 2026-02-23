@@ -136,7 +136,7 @@ export default function ApplicationModal({ isOpen, onClose, initialPlan = 'stand
                             style={{ marginTop: 'var(--spacing-xl)', width: '100%' }}
                             onClick={onClose}
                         >
-                            Close
+                            {language === 'tr' ? 'Kapat' : 'Close'}
                         </button>
                     </div>
                 ) : (
@@ -183,9 +183,9 @@ export default function ApplicationModal({ isOpen, onClose, initialPlan = 'stand
                                         onChange={handleChange}
                                         style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--border-radius-lg)', border: '1px solid var(--color-border)', background: 'white' }}
                                     >
-                                        <option value="free">Free - Modules Only</option>
-                                        <option value="standard">Standard - Live Classes</option>
-                                        <option value="premium">Premium - Private Coaching</option>
+                                        <option value="free">{language === 'tr' ? 'Ücretsiz - Sadece Modüller' : 'Free - Modules Only'}</option>
+                                        <option value="standard">{language === 'tr' ? 'Standart - Canlı Dersler' : 'Standard - Live Classes'}</option>
+                                        <option value="premium">{language === 'tr' ? 'Premium - Özel Koçluk' : 'Premium - Private Coaching'}</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
@@ -196,8 +196,8 @@ export default function ApplicationModal({ isOpen, onClose, initialPlan = 'stand
                                         onChange={handleChange}
                                         style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--border-radius-lg)', border: '1px solid var(--color-border)', background: 'white' }}
                                     >
-                                        <option value="English">English</option>
-                                        <option value="Turkish">Turkish</option>
+                                        <option value="English">{language === 'tr' ? 'İngilizce' : 'English'}</option>
+                                        <option value="Turkish">{language === 'tr' ? 'Türkçe' : 'Turkish'}</option>
                                     </select>
                                 </div>
                             </div>
@@ -228,7 +228,7 @@ export default function ApplicationModal({ isOpen, onClose, initialPlan = 'stand
                                 disabled={status === 'submitting'}
                                 style={{ width: '100%', padding: 'var(--spacing-lg)', fontSize: '1.1rem', marginTop: 'var(--spacing-md)' }}
                             >
-                                {status === 'submitting' ? 'Processing...' : 'Submit Application'}
+                                {status === 'submitting' ? t.processing : t.submit}
                             </button>
                         </form>
                     </>
