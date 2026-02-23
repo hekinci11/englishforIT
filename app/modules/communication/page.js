@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import Navbar from '../../../components/Navbar';
+import { useLanguage } from '../../../lib/LanguageContext';
+import { translations } from '../../../lib/translations';
 import { updateModuleProgress, addXP } from '../../../lib/progressTracker';
 
 const communicationScenarios = [
@@ -180,18 +180,20 @@ Now: Instant notifications using WebSockets"
 ];
 
 export default function CommunicationModule() {
+    const { language } = useLanguage();
+    const t = translations[language].communication;
     const [selectedScenario, setSelectedScenario] = useState(null);
     const [userResponse, setUserResponse] = useState('');
 
     const handleComplete = (scenarioId) => {
         if (userResponse.trim().length < 50) {
-            alert(' Please write at least a few sentences to complete this exercise.');
+            alert(t.minCharactersError.replace('{count}', 50));
             return;
         }
 
         updateModuleProgress('communication', `scenario_${scenarioId}`, 100);
         addXP(30);
-        alert('✅ Excellent work! +30 XP earned! Your communication skills are improving!');
+        alert(t.writingSuccess);
         setUserResponse('');
         setSelectedScenario(null);
     };
@@ -212,13 +214,13 @@ export default function CommunicationModule() {
                             fontSize: 'var(--font-size-4xl)',
                             marginBottom: 'var(--spacing-sm)',
                         }}>
-                            Professional Communication 💬
+                            {t.title}
                         </h1>
                         <p style={{
                             fontSize: 'var(--font-size-lg)',
                             color: 'var(--color-text-tertiary)',
                         }}>
-                            Master professional communication in emails, meetings, and presentations
+                            {t.subtitle}
                         </p>
                     </div>
 
@@ -245,7 +247,7 @@ export default function CommunicationModule() {
                                         onClick={() => setSelectedScenario(scenario)}
                                         className="btn btn-primary btn-sm"
                                     >
-                                        Start Practice →
+                                        {t.startPractice}
                                     </button>
                                 </div>
                             ))}
@@ -263,7 +265,7 @@ export default function CommunicationModule() {
                                 className="btn btn-secondary btn-sm"
                                 style={{ marginBottom: 'var(--spacing-xl)' }}
                             >
-                                ← Back to Scenarios
+                                {t.back}
                             </button>
 
                             <div className="grid grid-cols-2" style={{ alignItems: 'start' }}>
@@ -291,7 +293,7 @@ export default function CommunicationModule() {
                                             {selectedScenario.scenario}
                                         </div>
 
-                                        <h4 style={{ marginBottom: 'var(--spacing-md)' }}>Template:</h4>
+                                        <h4 style={{ marginBottom: 'var(--spacing-md)' }}>{t.template}</h4>
                                         <div style={{
                                             background: 'var(--color-bg-primary)',
                                             padding: 'var(--spacing-lg)',
@@ -305,7 +307,7 @@ export default function CommunicationModule() {
                                             {selectedScenario.template}
                                         </div>
 
-                                        <h4 style={{ marginBottom: 'var(--spacing-md)' }}>💡 Tips:</h4>
+                                        <h4 style={{ marginBottom: 'var(--spacing-md)' }}>{t.tipsHeader}</h4>
                                         <ul style={{
                                             paddingLeft: 'var(--spacing-xl)',
                                             color: 'var(--color-text-secondary)',
@@ -321,12 +323,12 @@ export default function CommunicationModule() {
                                 {/* Right Column - Practice Area */}
                                 <div className="card" style={{ position: 'sticky', top: 'var(--spacing-xl)' }}>
                                     <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>
-                                        Your Response
+                                        {language === 'tr' ? 'Yanıtınız' : 'Your Response'}
                                     </h3>
                                     <textarea
                                         value={userResponse}
                                         onChange={(e) => setUserResponse(e.target.value)}
-                                        placeholder="Type your response here..."
+                                        placeholder={t.placeholder}
                                         style={{
                                             width: '100%',
                                             minHeight: '400px',
@@ -352,7 +354,7 @@ export default function CommunicationModule() {
                                             fontSize: 'var(--font-size-sm)',
                                             color: 'var(--color-text-tertiary)',
                                         }}>
-                                            {userResponse.length} characters
+                                            {userResponse.length} {t.characters}
                                         </span>
                                         <button
                                             onClick={() => handleComplete(selectedScenario.id)}
@@ -362,7 +364,7 @@ export default function CommunicationModule() {
                                                 opacity: userResponse.trim().length < 50 ? 0.5 : 1,
                                             }}
                                         >
-                                            Submit +30 XP →
+                                            {t.submit}
                                         </button>
                                     </div>
                                     <p style={{
@@ -371,7 +373,7 @@ export default function CommunicationModule() {
                                         margin: 0,
                                         textAlign: 'center',
                                     }}>
-                                        Write at least 50 characters to complete
+                                        {t.minCharactersNotice.replace('{count}', 50)}
                                     </p>
                                 </div>
                             </div>

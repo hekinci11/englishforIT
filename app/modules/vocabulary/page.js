@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Navbar from '../../../components/Navbar';
+import { useLanguage } from '../../../lib/LanguageContext';
+import { translations } from '../../../lib/translations';
 import { vocabularyCategories, generateQuiz } from '../../../lib/vocabData';
 import { addXP, updateModuleProgress, addWordsLearned } from '../../../lib/progressTracker';
 
 export default function VocabularyModule() {
+    const { language } = useLanguage();
+    const t = translations[language].vocabulary;
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [mode, setMode] = useState('categories'); // categories, flashcards, quiz
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -94,13 +96,13 @@ export default function VocabularyModule() {
                             fontSize: 'var(--font-size-4xl)',
                             marginBottom: 'var(--spacing-sm)',
                         }}>
-                            IT Vocabulary 💻
+                            {t.title}
                         </h1>
                         <p style={{
                             fontSize: 'var(--font-size-lg)',
                             color: 'var(--color-text-tertiary)',
                         }}>
-                            Master essential technical terms with interactive flashcards and quizzes
+                            {t.subtitle}
                         </p>
                     </div>
 
@@ -113,14 +115,14 @@ export default function VocabularyModule() {
                                         {category.icon}
                                     </div>
                                     <h3 style={{ marginBottom: 'var(--spacing-md)' }}>
-                                        {category.name}
+                                        {language === 'tr' ? category.nameTr : category.name}
                                     </h3>
                                     <p style={{
                                         fontSize: 'var(--font-size-sm)',
                                         color: 'var(--color-text-tertiary)',
                                         marginBottom: 'var(--spacing-lg)',
                                     }}>
-                                        {category.words.length} words to learn
+                                        {t.wordsToLearn.replace('{count}', category.words.length)}
                                     </p>
                                     <div style={{
                                         display: 'flex',
@@ -131,14 +133,14 @@ export default function VocabularyModule() {
                                             className="btn btn-primary btn-sm"
                                             style={{ flex: 1 }}
                                         >
-                                            Flashcards
+                                            {t.flashcards}
                                         </button>
                                         <button
                                             onClick={() => startQuiz(category)}
                                             className="btn btn-secondary btn-sm"
                                             style={{ flex: 1 }}
                                         >
-                                            Quiz
+                                            {t.quiz}
                                         </button>
                                     </div>
                                 </div>
@@ -154,7 +156,7 @@ export default function VocabularyModule() {
                                 className="btn btn-secondary btn-sm"
                                 style={{ marginBottom: 'var(--spacing-xl)' }}
                             >
-                                ← Back to Categories
+                                {t.back}
                             </button>
 
                             <div style={{
@@ -166,7 +168,7 @@ export default function VocabularyModule() {
                                     marginBottom: 'var(--spacing-lg)',
                                     color: 'var(--color-text-tertiary)',
                                 }}>
-                                    Card {currentCardIndex + 1} of {selectedCategory.words.length}
+                                    {t.cardCount.replace('{current}', currentCardIndex + 1).replace('{total}', selectedCategory.words.length)}
                                 </div>
 
                                 <div
@@ -203,7 +205,7 @@ export default function VocabularyModule() {
                                                 fontSize: 'var(--font-size-sm)',
                                                 color: 'var(--color-text-muted)',
                                             }}>
-                                                Click to see definition
+                                                {t.clickDefinition}
                                             </p>
                                         </>
                                     ) : (
@@ -244,14 +246,14 @@ export default function VocabularyModule() {
                                         className="btn btn-secondary"
                                         style={{ flex: 1, opacity: currentCardIndex === 0 ? 0.5 : 1 }}
                                     >
-                                        ← Previous
+                                        {t.previous}
                                     </button>
                                     <button
                                         onClick={nextCard}
                                         className="btn btn-primary"
                                         style={{ flex: 1 }}
                                     >
-                                        {currentCardIndex === selectedCategory.words.length - 1 ? 'Finish' : 'Next →'}
+                                        {currentCardIndex === selectedCategory.words.length - 1 ? t.finish : `${t.next}`}
                                     </button>
                                 </div>
                             </div>
@@ -266,7 +268,7 @@ export default function VocabularyModule() {
                                 className="btn btn-secondary btn-sm"
                                 style={{ marginBottom: 'var(--spacing-xl)' }}
                             >
-                                ← Back to Categories
+                                {t.back}
                             </button>
 
                             <div style={{
@@ -278,7 +280,7 @@ export default function VocabularyModule() {
                                     marginBottom: 'var(--spacing-xl)',
                                     color: 'var(--color-text-tertiary)',
                                 }}>
-                                    Question {currentQuizIndex + 1} of {quiz.length}
+                                    {t.questionCount.replace('{current}', currentQuizIndex + 1).replace('{total}', quiz.length)}
                                 </div>
 
                                 <div className="card" style={{ marginBottom: 'var(--spacing-xl)' }}>
@@ -354,13 +356,13 @@ export default function VocabularyModule() {
                                     {quizScore === quiz.length ? '🎉' : quizScore >= quiz.length / 2 ? '👍' : '📚'}
                                 </div>
                                 <h2 style={{ marginBottom: 'var(--spacing-md)' }}>
-                                    Quiz Complete!
+                                    {t.quizComplete}
                                 </h2>
                                 <p style={{
                                     fontSize: 'var(--font-size-2xl)',
                                     marginBottom: 'var(--spacing-lg)',
                                 }}>
-                                    You scored {quizScore} out of {quiz.length}
+                                    {t.scoreText.replace('{score}', quizScore).replace('{total}', quiz.length)}
                                 </p>
                                 <p style={{
                                     fontSize: 'var(--font-size-lg)',
@@ -368,10 +370,10 @@ export default function VocabularyModule() {
                                     marginBottom: 'var(--spacing-2xl)',
                                 }}>
                                     {quizScore === quiz.length
-                                        ? 'Perfect score! Excellent work! 🌟'
+                                        ? t.perfectScore
                                         : quizScore >= quiz.length / 2
-                                            ? 'Good job! Keep practicing to improve.'
-                                            : 'Keep learning! Try the flashcards again.'}
+                                            ? t.goodScore
+                                            : t.keepLearning}
                                 </p>
                                 <div style={{
                                     display: 'flex',
@@ -382,14 +384,14 @@ export default function VocabularyModule() {
                                         className="btn btn-primary"
                                         style={{ flex: 1 }}
                                     >
-                                        Try Again
+                                        {t.tryAgain}
                                     </button>
                                     <button
                                         onClick={() => setMode('categories')}
                                         className="btn btn-secondary"
                                         style={{ flex: 1 }}
                                     >
-                                        Back to Categories
+                                        {t.back}
                                     </button>
                                 </div>
                             </div>

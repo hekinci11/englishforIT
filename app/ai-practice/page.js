@@ -1,15 +1,18 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Navbar from '../../components/Navbar';
+import { useLanguage } from '../../lib/LanguageContext';
+import { translations } from '../../lib/translations';
 import { getAIResponse, checkPronunciation } from '../../lib/aiService';
 import { updateModuleProgress, addXP } from '../../lib/progressTracker';
 
 export default function AIPractice() {
+    const { language } = useLanguage();
+    const t = translations[language].aiPractice;
     const [messages, setMessages] = useState([
         {
             role: 'ai',
-            text: "Hello! I'm your AI English practice partner. Let's have a conversation about technical topics! Tell me about a project you're currently working on, or ask me to help you practice specific scenarios.",
+            text: t.initialMessage,
             timestamp: new Date(),
         },
     ]);
@@ -77,11 +80,11 @@ export default function AIPractice() {
     };
 
     const quickPrompts = [
-        "Let's discuss my current project",
-        "Help me practice explaining a bug",
-        "I want to practice meeting phrases",
-        "Can we talk about code reviews?",
-        "Help me prepare for an interview",
+        t.prompts.project,
+        t.prompts.bug,
+        t.prompts.meetings,
+        t.prompts.codeReviews,
+        t.prompts.interview,
     ];
 
     return (
@@ -100,7 +103,7 @@ export default function AIPractice() {
                             fontSize: 'var(--font-size-4xl)',
                             marginBottom: 'var(--spacing-sm)',
                         }}>
-                            AI Practice Partner 🤖
+                            {t.title}
                         </h1>
                         <div style={{
                             display: 'flex',
@@ -109,13 +112,13 @@ export default function AIPractice() {
                             flexWrap: 'wrap',
                         }}>
                             <span className="badge badge-success">
-                                {conversationCount} conversations
+                                {t.conversationCount.replace('{count}', conversationCount)}
                             </span>
                             <span style={{
                                 fontSize: 'var(--font-size-sm)',
                                 color: 'var(--color-text-tertiary)',
                             }}>
-                                +20 XP every 5 messages
+                                {t.xpTip}
                             </span>
                         </div>
                     </div>
@@ -187,7 +190,7 @@ export default function AIPractice() {
                                                 borderRadius: 'var(--radius-lg)',
                                                 borderBottomLeftRadius: 0,
                                             }}>
-                                                <div className="pulse">AI is typing...</div>
+                                                <div className="pulse">{t.typing}</div>
                                             </div>
                                         </div>
                                     )}
@@ -231,7 +234,7 @@ export default function AIPractice() {
                                             value={input}
                                             onChange={(e) => setInput(e.target.value)}
                                             onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                                            placeholder="Type your message in English..."
+                                            placeholder={t.placeholder}
                                             style={{
                                                 flex: 1,
                                                 padding: 'var(--spacing-md)',
@@ -251,7 +254,7 @@ export default function AIPractice() {
                                                 opacity: (!input.trim() || isLoading) ? 0.5 : 1,
                                             }}
                                         >
-                                            Send →
+                                            {t.send}
                                         </button>
                                     </div>
                                 </div>
@@ -267,20 +270,20 @@ export default function AIPractice() {
                             {/* Pronunciation Checker */}
                             <div className="card">
                                 <h3 style={{ marginBottom: 'var(--spacing-md)' }}>
-                                    🎤 Pronunciation Check
+                                    {t.pronunciation.title}
                                 </h3>
                                 <p style={{
                                     fontSize: 'var(--font-size-sm)',
                                     color: 'var(--color-text-tertiary)',
                                     marginBottom: 'var(--spacing-md)',
                                 }}>
-                                    Enter a technical word to get pronunciation feedback
+                                    {t.pronunciation.desc}
                                 </p>
                                 <input
                                     type="text"
                                     value={selectedWord}
                                     onChange={(e) => setSelectedWord(e.target.value)}
-                                    placeholder="e.g., deprecated"
+                                    placeholder={t.pronunciation.placeholder}
                                     style={{
                                         width: '100%',
                                         padding: 'var(--spacing-md)',
@@ -298,7 +301,7 @@ export default function AIPractice() {
                                     style={{ width: '100%' }}
                                     disabled={!selectedWord.trim()}
                                 >
-                                    Check Pronunciation
+                                    {t.pronunciation.button}
                                 </button>
 
                                 {pronunciationResult && !pronunciationResult.loading && (
@@ -336,7 +339,7 @@ export default function AIPractice() {
                                 borderColor: 'var(--color-primary)',
                             }}>
                                 <h3 style={{ marginBottom: 'var(--spacing-md)' }}>
-                                    💡 Practice Tips
+                                    {t.tips.title}
                                 </h3>
                                 <ul style={{
                                     paddingLeft: 'var(--spacing-lg)',
@@ -345,11 +348,9 @@ export default function AIPractice() {
                                     lineHeight: 2,
                                     margin: 0,
                                 }}>
-                                    <li>Describe your projects in detail</li>
-                                    <li>Explain technical concepts</li>
-                                    <li>Practice common scenarios</li>
-                                    <li>Don't worry about mistakes!</li>
-                                    <li>Focus on clarity over perfection</li>
+                                    {t.tips.items.map((item, index) => (
+                                        <li key={index}>{item}</li>
+                                    ))}
                                 </ul>
                             </div>
 
@@ -366,7 +367,7 @@ export default function AIPractice() {
                                     color: 'var(--color-text-tertiary)',
                                     margin: 0,
                                 }}>
-                                    Total Conversations
+                                    {t.totalStats}
                                 </p>
                             </div>
                         </div>

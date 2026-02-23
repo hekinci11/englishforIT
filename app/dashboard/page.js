@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Navbar from '../../components/Navbar';
-import ModuleCard from '../../components/ModuleCard';
-import ProgressBar from '../../components/ProgressBar';
+import { useLanguage } from '../../lib/LanguageContext';
+import { translations } from '../../lib/translations';
 import { getProgress, updateStreak, getStats } from '../../lib/progressTracker';
 
 export default function Dashboard() {
+    const { language } = useLanguage();
+    const t = translations[language].dashboard;
     const [progress, setProgress] = useState(null);
     const [stats, setStats] = useState(null);
 
@@ -17,7 +18,9 @@ export default function Dashboard() {
     }, []);
 
     if (!progress) {
-        return <div>Loading...</div>;
+        return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {language === 'tr' ? 'Yükleniyor...' : 'Loading...'}
+        </div>;
     }
 
     const xpForNextLevel = progress.user.level * 100;
@@ -41,13 +44,13 @@ export default function Dashboard() {
                             fontSize: 'var(--font-size-4xl)',
                             marginBottom: 'var(--spacing-sm)',
                         }}>
-                            Welcome back! 👋
+                            {t.welcome}
                         </h1>
                         <p style={{
                             fontSize: 'var(--font-size-lg)',
                             color: 'var(--color-text-tertiary)',
                         }}>
-                            Ready to continue your English learning journey?
+                            {t.subtitle}
                         </p>
                     </div>
 
@@ -65,7 +68,7 @@ export default function Dashboard() {
                                 color: 'var(--color-text-tertiary)',
                                 margin: 0,
                             }}>
-                                Day Streak
+                                {t.stats.streak}
                             </p>
                         </div>
 
@@ -74,14 +77,14 @@ export default function Dashboard() {
                                 🏆
                             </div>
                             <h3 style={{ marginBottom: 'var(--spacing-xs)' }}>
-                                Level {progress.user.level}
+                                {language === 'tr' ? `Seviye ${progress.user.level}` : `Level ${progress.user.level}`}
                             </h3>
                             <p style={{
                                 fontSize: 'var(--font-size-sm)',
                                 color: 'var(--color-text-tertiary)',
                                 margin: 0,
                             }}>
-                                Current Level
+                                {t.stats.level}
                             </p>
                         </div>
 
@@ -97,7 +100,7 @@ export default function Dashboard() {
                                 color: 'var(--color-text-tertiary)',
                                 margin: 0,
                             }}>
-                                Words Learned
+                                {t.stats.words}
                             </p>
                         </div>
 
@@ -113,7 +116,7 @@ export default function Dashboard() {
                                 color: 'var(--color-text-tertiary)',
                                 margin: 0,
                             }}>
-                                Lessons Complete
+                                {t.stats.lessons}
                             </p>
                         </div>
                     </div>
@@ -128,14 +131,14 @@ export default function Dashboard() {
                         }}>
                             <div>
                                 <h3 style={{ marginBottom: 'var(--spacing-xs)' }}>
-                                    Level {progress.user.level} Progress
+                                    {t.progress.title.replace('{level}', progress.user.level)}
                                 </h3>
                                 <p style={{
                                     fontSize: 'var(--font-size-sm)',
                                     color: 'var(--color-text-tertiary)',
                                     margin: 0,
                                 }}>
-                                    {progress.user.xp} / {xpForNextLevel} XP
+                                    {t.progress.xp.replace('{xp}', progress.user.xp).replace('{total}', xpForNextLevel)}
                                 </p>
                             </div>
                             <div className="badge badge-success">
@@ -147,36 +150,36 @@ export default function Dashboard() {
 
                     {/* Learning Modules */}
                     <h2 style={{ marginBottom: 'var(--spacing-xl)' }}>
-                        Learning Modules
+                        {t.modules.title}
                     </h2>
                     <div className="grid grid-cols-2" style={{ marginBottom: 'var(--spacing-3xl)' }}>
                         <ModuleCard
-                            title="IT Vocabulary"
-                            description="Master technical terms with flashcards and quizzes"
+                            title={t.modules.vocabulary.title}
+                            description={t.modules.vocabulary.desc}
                             icon="💻"
                             progress={progress.modules.vocabulary.progress}
-                            badge={{ type: 'primary', text: 'Core' }}
+                            badge={{ type: 'primary', text: language === 'tr' ? 'Temel' : 'Core' }}
                             href="/modules/vocabulary"
                         />
                         <ModuleCard
-                            title="Documentation"
-                            description="Learn to read and write technical docs"
+                            title={t.modules.documentation.title}
+                            description={t.modules.documentation.desc}
                             icon="📄"
                             progress={progress.modules.documentation.progress}
-                            badge={{ type: 'primary', text: 'Core' }}
+                            badge={{ type: 'primary', text: language === 'tr' ? 'Temel' : 'Core' }}
                             href="/modules/documentation"
                         />
                         <ModuleCard
-                            title="Professional Communication"
-                            description="Practice emails, meetings, and presentations"
+                            title={t.modules.communication.title}
+                            description={t.modules.communication.desc}
                             icon="💬"
                             progress={progress.modules.communication.progress}
-                            badge={{ type: 'success', text: 'Popular' }}
+                            badge={{ type: 'success', text: language === 'tr' ? 'Popüler' : 'Popular' }}
                             href="/modules/communication"
                         />
                         <ModuleCard
-                            title="AI Practice"
-                            description="Chat with AI and get instant feedback"
+                            title={t.modules.aiPractice.title}
+                            description={t.modules.aiPractice.desc}
                             icon="🤖"
                             progress={progress.modules.aiPractice.progress}
                             badge={{ type: 'warning', text: 'AI' }}
@@ -188,7 +191,7 @@ export default function Dashboard() {
                     {progress.achievements.length > 0 && (
                         <>
                             <h2 style={{ marginBottom: 'var(--spacing-xl)' }}>
-                                Recent Achievements
+                                {t.achievements.title}
                             </h2>
                             <div className="grid grid-cols-3">
                                 {progress.achievements.slice(-3).reverse().map((achievement) => (

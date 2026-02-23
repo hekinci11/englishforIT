@@ -1,6 +1,7 @@
 'use client';
 
-import Navbar from '../../../components/Navbar';
+import { useLanguage } from '../../../lib/LanguageContext';
+import { translations } from '../../../lib/translations';
 import { updateModuleProgress, addXP } from '../../../lib/progressTracker';
 
 const documentationSamples = [
@@ -143,10 +144,13 @@ npm run dev
 ];
 
 export default function DocumentationModule() {
+    const { language } = useLanguage();
+    const t = translations[language].documentation;
+
     const handleComplete = (docId) => {
         updateModuleProgress('documentation', `doc_${docId}`, 100);
         addXP(25);
-        alert(' Practice completed! +25 XP earned!');
+        alert(language === 'tr' ? 'Pratik tamamlandı! +25 XP kazanıldı!' : 'Practice completed! +25 XP earned!');
     };
 
     return (
@@ -165,13 +169,13 @@ export default function DocumentationModule() {
                             fontSize: 'var(--font-size-4xl)',
                             marginBottom: 'var(--spacing-sm)',
                         }}>
-                            Technical Documentation 📄
+                            {t.title}
                         </h1>
                         <p style={{
                             fontSize: 'var(--font-size-lg)',
                             color: 'var(--color-text-tertiary)',
                         }}>
-                            Learn to read and understand technical documentation in English
+                            {t.subtitle}
                         </p>
                     </div>
 
@@ -208,7 +212,7 @@ export default function DocumentationModule() {
                                 {/* Comprehension Questions */}
                                 <div>
                                     <h3 style={{ marginBottom: 'var(--spacing-lg)' }}>
-                                        Comprehension Check
+                                        {t.comprehensionCheck}
                                     </h3>
                                     <div style={{
                                         display: 'flex',
@@ -231,7 +235,7 @@ export default function DocumentationModule() {
                                                     fontSize: 'var(--font-size-base)',
                                                     marginBottom: 'var(--spacing-md)',
                                                 }}>
-                                                    Question {idx + 1}: {q.question}
+                                                    {t.question.replace('{num}', idx + 1)}: {q.question}
                                                 </summary>
                                                 <div style={{
                                                     display: 'flex',
@@ -257,7 +261,7 @@ export default function DocumentationModule() {
                                                                     marginLeft: 'var(--spacing-sm)',
                                                                     color: 'var(--color-secondary)',
                                                                 }}>
-                                                                    ✓ Correct
+                                                                    ✓ {t.correct}
                                                                 </span>
                                                             )}
                                                         </div>
@@ -273,7 +277,7 @@ export default function DocumentationModule() {
                                     className="btn btn-primary"
                                     style={{ marginTop: 'var(--spacing-xl)' }}
                                 >
-                                    Mark as Complete +25 XP
+                                    {t.markAsComplete} +25 XP
                                 </button>
                             </div>
                         ))}
@@ -286,19 +290,16 @@ export default function DocumentationModule() {
                         borderColor: 'var(--color-primary)',
                     }}>
                         <h3 style={{ marginBottom: 'var(--spacing-md)' }}>
-                            💡 Tips for Reading Technical Documentation
+                            {t.tips.title}
                         </h3>
                         <ul style={{
                             paddingLeft: 'var(--spacing-xl)',
                             color: 'var(--color-text-secondary)',
                             lineHeight: 2,
                         }}>
-                            <li>Focus on key sections: Overview, Prerequisites, Installation, and Usage</li>
-                            <li>Pay attention to code examples - they show practical implementation</li>
-                            <li>Note technical terms and their context</li>
-                            <li>Check the API endpoints, methods (GET, POST, etc.), and response formats</li>
-                            <li>Look for common patterns like authentication requirements</li>
-                            <li>Understand error codes and troubleshooting sections</li>
+                            {t.tips.items.map((item, index) => (
+                                <li key={index}>{item}</li>
+                            ))}
                         </ul>
                     </div>
                 </div>
