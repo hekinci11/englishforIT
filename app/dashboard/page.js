@@ -158,7 +158,7 @@ export default function Dashboard() {
                             description={t.modules.vocabulary.desc}
                             icon="💻"
                             progress={progress.modules.vocabulary.progress}
-                            badge={{ type: 'primary', text: language === 'tr' ? 'Temel' : 'Core' }}
+                            badge={{ type: 'primary', text: t.modules.badges.core }}
                             href="/modules/vocabulary"
                         />
                         <ModuleCard
@@ -166,7 +166,7 @@ export default function Dashboard() {
                             description={t.modules.documentation.desc}
                             icon="📄"
                             progress={progress.modules.documentation.progress}
-                            badge={{ type: 'primary', text: language === 'tr' ? 'Temel' : 'Core' }}
+                            badge={{ type: 'primary', text: t.modules.badges.core }}
                             href="/modules/documentation"
                         />
                         <ModuleCard
@@ -174,7 +174,7 @@ export default function Dashboard() {
                             description={t.modules.communication.desc}
                             icon="💬"
                             progress={progress.modules.communication.progress}
-                            badge={{ type: 'success', text: language === 'tr' ? 'Popüler' : 'Popular' }}
+                            badge={{ type: 'success', text: t.modules.badges.popular }}
                             href="/modules/communication"
                         />
                         <ModuleCard
@@ -194,23 +194,26 @@ export default function Dashboard() {
                                 {t.achievements.title}
                             </h2>
                             <div className="grid grid-cols-3">
-                                {progress.achievements.slice(-3).reverse().map((achievement) => (
-                                    <div key={achievement.id} className="card text-center">
-                                        <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-sm)' }}>
-                                            {achievement.icon}
+                                {progress.achievements.slice(-3).reverse().map((achievement) => {
+                                    const details = t.achievements.list[achievement.id] || achievement;
+                                    return (
+                                        <div key={achievement.id} className="card text-center">
+                                            <div style={{ fontSize: '3rem', marginBottom: 'var(--spacing-sm)' }}>
+                                                {details.icon || achievement.icon}
+                                            </div>
+                                            <h4 style={{ marginBottom: 'var(--spacing-xs)' }}>
+                                                {details.title || achievement.title}
+                                            </h4>
+                                            <p style={{
+                                                fontSize: 'var(--font-size-sm)',
+                                                color: 'var(--color-text-tertiary)',
+                                                margin: 0,
+                                            }}>
+                                                {details.description || achievement.description}
+                                            </p>
                                         </div>
-                                        <h4 style={{ marginBottom: 'var(--spacing-xs)' }}>
-                                            {achievement.title}
-                                        </h4>
-                                        <p style={{
-                                            fontSize: 'var(--font-size-sm)',
-                                            color: 'var(--color-text-tertiary)',
-                                            margin: 0,
-                                        }}>
-                                            {achievement.description}
-                                        </p>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </>
                     )}

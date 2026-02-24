@@ -12,7 +12,7 @@ export default function AIPractice() {
     const [messages, setMessages] = useState([
         {
             role: 'ai',
-            text: t.initialMessage,
+            text: translations[language].aiPractice.initialMessage,
             timestamp: new Date(),
         },
     ]);
@@ -30,6 +30,16 @@ export default function AIPractice() {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    useEffect(() => {
+        if (messages.length === 1 && messages[0].role === 'ai') {
+            setMessages([{
+                ...messages[0],
+                text: translations[language].aiPractice.initialMessage
+            }]);
+        }
+    }, [language]); // Re-run when language changes
+
 
     const handleSendMessage = async () => {
         if (!input.trim() || isLoading) return;

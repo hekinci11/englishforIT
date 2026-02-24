@@ -3,149 +3,12 @@
 import { useLanguage } from '../../../lib/LanguageContext';
 import { translations } from '../../../lib/translations';
 import { updateModuleProgress, addXP } from '../../../lib/progressTracker';
-
-const documentationSamples = [
-    {
-        id: 'api-docs',
-        title: 'API Documentation',
-        icon: '📡',
-        content: `# User Authentication API
-
-## Overview
-This API provides endpoints for user authentication including registration, login, and password reset functionality.
-
-## Base URL
-\`\`\`
-https://api.example.com/v1
-\`\`\`
-
-## Authentication
-All authenticated endpoints require a Bearer token in the Authorization header:
-\`\`\`
-Authorization: Bearer YOUR_ACCESS_TOKEN
-\`\`\`
-
-## Endpoints
-
-### POST /auth/register
-Creates a new user account.
-
-**Request Body:**
-\`\`\`json
-{
-  "email": "user@example.com",
-  "password": "securePassword123",
-  "name": "John Doe"
-}
-\`\`\`
-
-**Response (201 Created):**
-\`\`\`json
-{
-  "user": {
-    "id": "usr_123",
-    "email": "user@example.com",
-    "name": "John Doe"
-  },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-\`\`\``,
-        questions: [
-            {
-                question: 'What HTTP method is used to create a new user?',
-                options: ['GET', 'POST', 'PUT', 'DELETE'],
-                correct: 'POST',
-            },
-            {
-                question: 'What status code is returned on successful registration?',
-                options: ['200', '201', '204', '400'],
-                correct: '201',
-            },
-            {
-                question: 'Where should the access token be included?',
-                options: ['Query parameter', 'Request body', 'Authorization header', 'Cookie'],
-                correct: 'Authorization header',
-            },
-        ],
-    },
-    {
-        id: 'readme',
-        title: 'README Documentation',
-        icon: '📖',
-        content: `# Project Name
-
-A modern web application built with Next.js and React for managing team workflows.
-
-## Prerequisites
-
-Before you begin, ensure you have the following installed:
-- Node.js (v18 or higher)
-- npm or yarn
-- Git
-
-## Installation
-
-1. Clone the repository:
-\`\`\`bash
-git clone https://github.com/username/project-name.git
-cd project-name
-\`\`\`
-
-2. Install dependencies:
-\`\`\`bash
-npm install
-\`\`\`
-
-3. Create a \`.env.local\` file in the root directory:
-\`\`\`env
-DATABASE_URL=your_database_url
-API_KEY=your_api_key
-\`\`\`
-
-4. Run the development server:
-\`\`\`bash
-npm run dev
-\`\`\`
-
-## Project Structure
-
-\`\`\`
-/app        - Next.js app router pages
-/components - Reusable React components
-/lib        - Utility functions and helpers
-/public     - Static assets
-\`\`\`
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (\`git checkout -b feature/amazing-feature\`)
-3. Commit your changes (\`git commit -m 'Add some amazing feature'\`)
-4. Push to the branch (\`git push origin feature/amazing-feature\`)
-5. Open a Pull Request`,
-        questions: [
-            {
-                question: 'What is the minimum required Node.js version?',
-                options: ['v14', 'v16', 'v18', 'v20'],
-                correct: 'v18',
-            },
-            {
-                question: 'What command starts the development server?',
-                options: ['npm start', 'npm dev', 'npm run dev', 'npm serve'],
-                correct: 'npm run dev',
-            },
-            {
-                question: 'Where should environment variables be stored?',
-                options: ['.env.local file', 'package.json', 'config.js', 'README.md'],
-                correct: '.env.local file',
-            },
-        ],
-    },
-];
+import { documentationSamples } from '../../../lib/documentationData';
 
 export default function DocumentationModule() {
     const { language } = useLanguage();
     const t = translations[language].documentation;
+    const samples = documentationSamples[language] || documentationSamples.en;
 
     const handleComplete = (docId) => {
         updateModuleProgress('documentation', `doc_${docId}`, 100);
@@ -181,7 +44,7 @@ export default function DocumentationModule() {
 
                     {/* Documentation Samples */}
                     <div className="grid grid-cols-1" style={{ gap: 'var(--spacing-2xl)' }}>
-                        {documentationSamples.map((doc) => (
+                        {samples.map((doc) => (
                             <div key={doc.id} className="card">
                                 <div style={{
                                     display: 'flex',
